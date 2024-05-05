@@ -17,6 +17,12 @@ public class SimpleListTest {
             simpleList.prepend(random.nextInt(100));
         }
 
+        for(int i=0; i<simpleList.getSize(); i++) {
+            System.out.println(simpleList.getElement(i));
+        }
+        
+        System.out.println("---------------");
+
         simpleList.sort();
 
         for(int i=0; i<simpleList.getSize(); i++) {

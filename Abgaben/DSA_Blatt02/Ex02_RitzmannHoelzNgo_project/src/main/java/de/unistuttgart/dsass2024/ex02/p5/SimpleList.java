@@ -45,15 +45,27 @@ public class SimpleList<T extends Comparable<T>> implements ISimpleList<T> {
                 Boolean switchedNodes = false;
                 ISimpleListNode<T> firstNode = this.firstListNode;
                 ISimpleListNode<T> secondNode = this.firstListNode.getNext();
+                ISimpleListNode<T> previousNode = this.firstListNode;
                 for(int j=0; j<this.size-1; j++) {
                     if(firstNode.getElement().compareTo(secondNode.getElement()) > 0) {
-                        T temporaryStorage = firstNode.getElement();
-                        firstNode.setElement(secondNode.getElement());
-                        secondNode.setElement(temporaryStorage);;
+                        if(previousNode == firstNode) {
+                            this.firstListNode = secondNode;
+                            firstNode.setNext(this.firstListNode.getNext());
+                            this.firstListNode.setNext(firstNode);
+                        }
+                        else {
+                            previousNode.setNext(secondNode);
+                            firstNode.setNext(secondNode.getNext());
+                            secondNode.setNext(firstNode);
+                        }
+                        previousNode = secondNode;
                         switchedNodes = true;
                     }
-                    firstNode = secondNode;
-                    secondNode = secondNode.getNext();
+                    else {
+                        previousNode = firstNode;
+                    }
+                    firstNode = previousNode.getNext();
+                    secondNode = firstNode.getNext();
                 }
                 if(switchedNodes==false) {
                     break;
